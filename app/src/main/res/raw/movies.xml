@@ -1,42 +1,96 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<movie>
-    <title>
-        Big Buck Bunny
-    </title>
-    <url>
-        http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4
-    </url>
-    <chapter>
-        <subtitle>
-            Intro
-        </subtitle>
-        <time>
-            00:00
-        </time>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <movie>
+        <title>
+            Big Buck Bunny
+        </title>
         <url>
-            https://en.wikipedia.org/wiki/Big_Buck_Bunny
+            http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4
         </url>
-    </chapter>
-    <chapter>
-        <subtitle>
-            Title
-        </subtitle>
-        <time>
-            00:25
-        </time>
+        <chapter>
+            <subtitle>
+                Intro
+            </subtitle>
+            <time>
+                00:00
+            </time>
+            <url>
+                https://en.wikipedia.org/wiki/Big_Buck_Bunny
+            </url>
+        </chapter>
+        <chapter>
+            <subtitle>
+                Title
+            </subtitle>
+            <time>
+                00:25
+            </time>
+            <url>
+                https://en.wikipedia.org/wiki/Big_Buck_Bunny
+            </url>
+        </chapter>
+        <chapter>
+            <subtitle>
+                Butterflies
+            </subtitle>
+            <time>
+                01:15
+            </time>
+            <url>
+                https://en.wikipedia.org/wiki/Butterflies
+            </url>
+        </chapter>
+        <chapter>
+            <subtitle>
+                Fly
+            </subtitle>
+            <time>
+                06:37
+            </time>
+            <url>
+                https://en.wikipedia.org/wiki/Squirrel
+            </url>
+        </chapter>
+        <chapter>
+            <subtitle>
+                Kite
+            </subtitle>
+            <time>
+                08:00
+            </time>
+            <url>
+                https://en.wikipedia.org/wiki/Kite
+            </url>
+        </chapter>
+    </movie>
+    <movie>
+        <title>
+            Elephants Dream
+        </title>
         <url>
-            https://en.wikipedia.org/wiki/Big_Buck_Bunny
+            https://player.vimeo.com/video/1132937
         </url>
-    </chapter>
-    <chapter>
-        <subtitle>
-            Butterflies
-        </subtitle>
-        <time>
-            01:15
-        </time>
-        <url>
-            https://en.wikipedia.org/wiki/Butterflies
-        </url>
-    </chapter>
-</movie>
+        <chapter>
+            <subtitle>
+                Intro
+            </subtitle>
+            <time>
+                00:00
+            </time>
+            <url>
+                https://en.wikipedia.org/wiki/Elephants_Dream
+            </url>
+        </chapter>
+        <chapter>
+            <subtitle>
+                Title
+            </subtitle>
+            <time>
+                00:10
+            </time>
+            <url>
+                https://en.wikipedia.org/wiki/Elephants_Dream
+            </url>
+        </chapter>
+    </movie>
+</resources>

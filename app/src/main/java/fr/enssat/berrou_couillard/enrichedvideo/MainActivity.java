@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         vidView.setMediaController(vidControl);
         // Webview
         WebView browser = (WebView) findViewById(R.id.webView);
-        browser.setWebViewClient(new MyWebViewClient());
+        // browser.setWebViewClient(new MyWebViewClient());
         browser.getSettings().setJavaScriptEnabled(true);
         browser.loadUrl("http://www.wikipedia.com");
 
@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+
+
     }
 
 
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     private class MyWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            // TODO : Faire une white list des URL pour désactiver les clics dans la webView
             view.loadUrl(url); // load the url
             return true;
         }
