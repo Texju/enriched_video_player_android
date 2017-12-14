@@ -65,10 +65,10 @@
     </movie>
     <movie>
         <title>
-            Elephants Dream
+            .re_potemkin
         </title>
         <url>
-            https://player.vimeo.com/video/1132937
+            http://httpdot.net/itheora/data/rep_video/RepotemkinVsPotemkin_(web)608x224px369kbpsMD.ogv
         </url>
         <chapter>
             <subtitle>
@@ -78,19 +78,31 @@
                 00:00
             </time>
             <url>
-                https://en.wikipedia.org/wiki/Elephants_Dream
+                http://re-potemkin.httpdot.net/
             </url>
         </chapter>
         <chapter>
             <subtitle>
-                Title
+                Meat
             </subtitle>
             <time>
-                00:10
+                05:11
             </time>
             <url>
-                https://en.wikipedia.org/wiki/Elephants_Dream
+                https://en.wikipedia.org/wiki/Meat
             </url>
         </chapter>
+        <chapter>
+            <subtitle>
+                Ship store
+            </subtitle>
+            <time>
+                05:11
+            </time>
+            <url>
+                https://en.wikipedia.org/wiki/Retail_store
+            </url>
+        </chapter>
+
     </movie>
 </resources>

@@ -1,5 +1,6 @@
 package fr.enssat.berrou_couillard.enrichedvideo;
 
+import android.util.Log;
 import android.util.Xml;
 
 import org.xmlpull.v1.XmlPullParser;

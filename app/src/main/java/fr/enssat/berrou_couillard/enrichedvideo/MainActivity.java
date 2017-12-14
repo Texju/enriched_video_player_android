@@ -38,16 +38,15 @@ public class MainActivity extends AppCompatActivity {
         browser.setWebViewClient(new MyWebViewClient());
         browser.getSettings().setJavaScriptEnabled(true);
         browser.loadUrl("http://www.wikipedia.com");
-        Log.v(TAG,"rawwwwwwwwwwww: ");
+        Log.v(TAG,"Test");
 
 
 
         try {
             InputStream raw = null;
-            raw = new FileInputStream(String.valueOf(R.raw.movies));
-            // new File("./movies.xml")
-            XmlParser.parse(raw);
-            Log.v(TAG, String.valueOf(raw));
+            InputStream inputStream = getResources().openRawResource(R.raw.movies);
+            Movie movie = XmlParser.parse(inputStream);
+            Log.v(TAG, String.valueOf(movie));
         } catch (XmlPullParserException e) {
             e.printStackTrace();
         } catch (IOException e) {
