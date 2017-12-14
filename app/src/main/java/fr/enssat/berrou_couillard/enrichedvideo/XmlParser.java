@@ -71,7 +71,7 @@ public class XmlParser {
                 skip(parser);
             }
         }
-        return new Movie(chapters, title, url);
+        return new Movie(chapters, url, title);
     }
 
     private static Chapter readChapter(XmlPullParser parser) throws XmlPullParserException, IOException {

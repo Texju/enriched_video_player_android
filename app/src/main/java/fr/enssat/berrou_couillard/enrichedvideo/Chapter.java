@@ -12,7 +12,7 @@ public class Chapter {
     public Chapter(String title, String time, String url) {
         this.title = title;
         this.time = time;
-        this.url=url;
+        this.setUrl(url);
     }
 
     public String getTitle() {
@@ -26,5 +26,13 @@ public class Chapter {
     }
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
