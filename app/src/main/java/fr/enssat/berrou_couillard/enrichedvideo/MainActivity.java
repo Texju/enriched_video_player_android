@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         vidView.setMediaController(vidControl);
         // Webview
         WebView browser = (WebView) findViewById(R.id.webView);
-        // browser.setWebViewClient(new MyWebViewClient());
+        browser.setWebViewClient(new MyWebViewClient());
         browser.getSettings().setJavaScriptEnabled(true);
         browser.loadUrl("http://www.wikipedia.com");
         Log.v(TAG,"rawwwwwwwwwwww: ");
@@ -44,8 +44,10 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             InputStream raw = null;
-            raw = new FileInputStream(new File("./movies.xml"));
+            raw = new FileInputStream(String.valueOf(R.raw.movies));
+            // new File("./movies.xml")
             XmlParser.parse(raw);
+            Log.v(TAG, String.valueOf(raw));
         } catch (XmlPullParserException e) {
             e.printStackTrace();
         } catch (IOException e) {
