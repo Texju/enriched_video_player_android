@@ -3,13 +3,22 @@ package fr.enssat.berrou_couillard.enrichedvideo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.net.Uri;
+import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
-public class MainActivity extends AppCompatActivity {
+import org.xmlpull.v1.XmlPullParserException;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+
+public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "Info";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +38,18 @@ public class MainActivity extends AppCompatActivity {
         browser.setWebViewClient(new MyWebViewClient());
         browser.getSettings().setJavaScriptEnabled(true);
         browser.loadUrl("http://www.wikipedia.com");
+
+
+        try {
+            InputStream raw = null;
+            raw = new FileInputStream(new File("./movies.xml"));
+            Log.v(TAG,"rawwwwwwwwwwww: "+raw.toString());
+            XmlParser.parse(raw);
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
     }
