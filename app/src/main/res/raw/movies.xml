@@ -1,108 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <movie>
-        <title>
-            Big Buck Bunny
-        </title>
-        <url>
-            http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4
-        </url>
+        <title>Big Buck Bunny</title>
+        <url>http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4</url>
         <chapter>
-            <subtitle>
-                Intro
-            </subtitle>
-            <time>
-                00:00
-            </time>
-            <url>
-                https://en.wikipedia.org/wiki/Big_Buck_Bunny
-            </url>
+            <subtitle>Intro</subtitle>
+            <time>00:00</time>
+            <url>https://en.wikipedia.org/wiki/Big_Buck_Bunny</url>
         </chapter>
         <chapter>
-            <subtitle>
-                Title
-            </subtitle>
-            <time>
-                00:25
-            </time>
-            <url>
-                https://en.wikipedia.org/wiki/Big_Buck_Bunny
-            </url>
+            <subtitle>Title</subtitle>
+            <time>00:25</time>
+            <url>https://en.wikipedia.org/wiki/Big_Buck_Bunny</url>
         </chapter>
         <chapter>
-            <subtitle>
-                Butterflies
-            </subtitle>
-            <time>
-                01:15
-            </time>
-            <url>
-                https://en.wikipedia.org/wiki/Butterflies
-            </url>
+            <subtitle>Butterflies</subtitle>
+            <time>01:15</time>
+            <url>https://en.wikipedia.org/wiki/Butterflies</url>
         </chapter>
         <chapter>
-            <subtitle>
-                Fly
-            </subtitle>
-            <time>
-                06:37
-            </time>
-            <url>
-                https://en.wikipedia.org/wiki/Squirrel
-            </url>
+            <subtitle>Fly</subtitle>
+            <time>06:37</time>
+            <url>https://en.wikipedia.org/wiki/Squirrel</url>
         </chapter>
         <chapter>
-            <subtitle>
-                Kite
-            </subtitle>
-            <time>
-                08:00
-            </time>
-            <url>
-                https://en.wikipedia.org/wiki/Kite
-            </url>
+            <subtitle>Kite</subtitle>
+            <time>08:00</time>
+            <url>https://en.wikipedia.org/wiki/Kite</url>
         </chapter>
     </movie>
     <movie>
-        <title>
-            .re_potemkin
-        </title>
-        <url>
-            http://httpdot.net/itheora/data/rep_video/RepotemkinVsPotemkin_(web)608x224px369kbpsMD.ogv
-        </url>
+        <title>.re_potemkin</title>
+        <url>http://httpdot.net/itheora/data/rep_video/RepotemkinVsPotemkin_(web)608x224px369kbpsMD.ogv</url>
         <chapter>
-            <subtitle>
-                Intro
-            </subtitle>
-            <time>
-                00:00
-            </time>
-            <url>
-                http://re-potemkin.httpdot.net/
-            </url>
+            <subtitle>Intro</subtitle>
+            <time>00:00</time>
+            <url>http://re-potemkin.httpdot.net/</url>
         </chapter>
         <chapter>
-            <subtitle>
-                Meat
-            </subtitle>
-            <time>
-                05:11
-            </time>
-            <url>
-                https://en.wikipedia.org/wiki/Meat
-            </url>
+            <subtitle>Meat</subtitle>
+            <time>05:11</time>
+            <url>https://en.wikipedia.org/wiki/Meat</url>
         </chapter>
         <chapter>
-            <subtitle>
-                Ship store
-            </subtitle>
-            <time>
-                05:11
-            </time>
-            <url>
-                https://en.wikipedia.org/wiki/Retail_store
-            </url>
+            <subtitle>Ship store</subtitle>
+            <time>05:11</time>
+            <url>https://en.wikipedia.org/wiki/Retail_store</url>
         </chapter>
-
     </movie>
 </resources>

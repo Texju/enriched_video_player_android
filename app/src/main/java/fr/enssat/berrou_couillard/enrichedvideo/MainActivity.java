@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         // Vidéo view
         VideoView vidView = (VideoView)findViewById(R.id.videoView);
+        // movie.url
         String vidAddress = "http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4";
         Uri vidUri = Uri.parse(vidAddress);
         vidView.setVideoURI(vidUri);
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         WebView browser = (WebView) findViewById(R.id.webView);
         browser.setWebViewClient(new MyWebViewClient());
         browser.getSettings().setJavaScriptEnabled(true);
+        // chapter.url
         browser.loadUrl("http://www.wikipedia.com");
         Log.v(TAG,"Test");
 
