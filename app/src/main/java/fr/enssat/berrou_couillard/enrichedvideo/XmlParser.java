@@ -19,7 +19,7 @@ public class XmlParser {
     // We don't use namespaces
     private static final String ns = null;
 
-    public static Movie parse(InputStream in) throws XmlPullParserException, IOException {
+    public static List <Movie> parse(InputStream in) throws XmlPullParserException, IOException {
         try {
             XmlPullParser parser = Xml.newPullParser();
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
@@ -31,11 +31,30 @@ public class XmlParser {
         }
     }
 
-    private static Movie readFeed(XmlPullParser parser) throws XmlPullParserException, IOException {
+    private static List <Movie> readFeed(XmlPullParser parser) throws XmlPullParserException, IOException {
+        List <Movie> movies = new ArrayList();
+        Movie movie;
+
+        parser.require(XmlPullParser.START_TAG, ns, "resources");
+        while (parser.next() != XmlPullParser.END_TAG) {
+            if (parser.getEventType() != XmlPullParser.START_TAG) {
+                continue;
+            }
+            String name = parser.getName();
+            if (name.equals("movie")) {
+                movie = readMovie(parser);
+                movies.add(movie);
+            }
+        }
+        return movies;
+    }
+
+    private static Movie readMovie(XmlPullParser parser) throws XmlPullParserException, IOException {
+        parser.require(XmlPullParser.START_TAG, ns, "movie");
         List <Chapter> chapters = new ArrayList();
         Chapter chapter;
-
-        parser.require(XmlPullParser.START_TAG, ns, "movie");
+        String url=null;
+        String title=null;
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
@@ -44,29 +63,52 @@ public class XmlParser {
             if (name.equals("chapter")) {
                 chapter = readChapter(parser);
                 chapters.add(chapter);
+            } else if (name.equals("url")) {
+                url = readUrl(parser);
+            } else if (name.equals("title")) {
+                title = readTitle(parser);
+            } else {
+                skip(parser);
             }
         }
-        return new Movie(chapters);
+        return new Movie(chapters, title, url);
     }
 
     private static Chapter readChapter(XmlPullParser parser) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, ns, "chapter");
         String title = null;
         String time = null;
+        String url=null;
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
             }
             String name = parser.getName();
-            if (name.equals("title")) {
-                title = readTitle(parser);
+            if (name.equals("subtitle")) {
+                title = readSubTitle(parser);
             } else if (name.equals("time")) {
                 time = readTime(parser);
+            } else if (name.equals("url")) {
+                url = readUrl(parser);
             } else {
                 skip(parser);
             }
         }
-        return new Chapter(title, time);
+        return new Chapter(title, time, url);
+    }
+
+    private static String readSubTitle(XmlPullParser parser) throws IOException, XmlPullParserException {
+        parser.require(XmlPullParser.START_TAG, ns, "subtitle");
+        String subtitle = readText(parser);
+        parser.require(XmlPullParser.END_TAG, ns, "subtitle");
+        return subtitle;
+    }
+
+    private static String readUrl(XmlPullParser parser) throws IOException, XmlPullParserException {
+        parser.require(XmlPullParser.START_TAG, ns, "url");
+        String url = readText(parser);
+        parser.require(XmlPullParser.END_TAG, ns, "url");
+        return url;
     }
 
     // Processes title tags in the feed.

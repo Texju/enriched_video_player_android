@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -45,19 +46,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         try {
-            InputStream raw = null;
-            InputStream inputStream = getResources().openRawResource(R.raw.movies);
-            Movie movie = XmlParser.parse(inputStream);
-            Log.v(TAG, String.valueOf(movie));
+            InputStream is=getResources().openRawResource(R.raw.movies);
+            List<Movie> movies = XmlParser.parse(is);
+            Log.v(TAG, movies.toString());
         } catch (XmlPullParserException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
-
     }
 
 
