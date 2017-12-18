@@ -4,12 +4,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.net.Uri;
 import android.util.Log;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import org.xmlpull.v1.XmlPullParserException;
@@ -18,6 +20,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -25,11 +29,18 @@ import java.util.stream.IntStream;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Info";
+
+    ExpandableListAdapter listAdapter;
+    ExpandableListView expListView;
+    List<String> listDataHeader;
+    HashMap<String, List<String>> listDataChild;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         List<Movie> movies = null;
+        Movie currentMovie;
         try {
             InputStream is=getResources().openRawResource(R.raw.movies);
             movies = XmlParser.parse(is);
@@ -60,21 +71,67 @@ public class MainActivity extends AppCompatActivity {
 
         // Ajout des bouttons pour les chapitres
         // Définition du Layout à construire.
-        ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id. expandableListView);
-        // vider la liste
-        // Définition des buttons
-        for(Chapter chap : list_chapter) {
-            // ajout des éléments au expandableListView
-            Log.v(TAG, chap.getTitle());
-        }
+        expListView = (ExpandableListView) findViewById(R.id.expandableListView );
 
+        currentMovie=movies.get(0);
+        // preparing list data
+        prepareListData(movies,currentMovie);
 
+        listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
 
+        // setting list adapter
+        expListView.setAdapter(listAdapter);
 
+        // Listview on child click listener
+        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
-
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v,
+                                        int groupPosition, int childPosition, long id) {
+                // TODO Auto-generated method stub
+                Toast.makeText(
+                        getApplicationContext(),
+                        listDataHeader.get(groupPosition)
+                                + " : "
+                                + listDataChild.get(
+                                listDataHeader.get(groupPosition)).get(
+                                childPosition), Toast.LENGTH_SHORT)
+                        .show();
+                return false;
+            }
+        });
     }
 
+
+    // Preparation des données à envoyer à l'expandableListView
+    private void prepareListData(List<Movie> m, Movie currentMovie) {
+
+        listDataHeader = new ArrayList<String>();
+        listDataChild = new HashMap<String, List<String>>();
+
+        // Création de 2 headers : movies et chapters
+        listDataHeader.add("Movies");
+        listDataHeader.add("Chapters");
+
+        // Création des noeuds enfants pour les films et les chapitres
+        List<String> movies = new ArrayList<String>();
+        for (Movie mo: m){
+            movies.add(mo.getTitle());
+        }
+
+        List<String> chapters = new ArrayList<String>();
+        for (Movie mo: m){
+            if (mo.equals(currentMovie)){
+                for (Chapter ch: mo.getChapitres()){
+                    chapters.add(ch.getTitle());
+                }
+            }
+        }
+
+        // Association des noeuds enfants aux headers
+        listDataChild.put(listDataHeader.get(0), movies);
+        listDataChild.put(listDataHeader.get(1), chapters);
+    }
 
 
     // custom web view client class who extends WebViewClient

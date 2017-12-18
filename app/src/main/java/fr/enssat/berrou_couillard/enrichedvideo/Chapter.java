@@ -21,6 +21,7 @@ public class Chapter {
     public void setTitle(String title) {
         this.title = title;
     }
+
     public String getTime() {
         return time;
     }
@@ -31,7 +32,6 @@ public class Chapter {
     public String getUrl() {
         return url;
     }
-
     public void setUrl(String url) {
         this.url = url;
     }

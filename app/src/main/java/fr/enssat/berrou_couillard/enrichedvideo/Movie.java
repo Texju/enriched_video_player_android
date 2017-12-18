@@ -21,7 +21,7 @@ public class Movie {
         this.chapitres = chapitres;
     }
 
-    public List getChapitres() {
+    public List <Chapter> getChapitres() {
         return chapitres;
     }
     public void setChapitres(List chapitres) {
