@@ -44,13 +44,17 @@ public class MainActivity extends AppCompatActivity {
     ExpandableListView expListView;
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
+    List<Movie> movies = null;
+    VideoView vidView;
+    MediaController vidControl;
+    Movie currentMovie;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        List<Movie> movies = null;
-        Movie currentMovie;
+
         try {
             InputStream is=getResources().openRawResource(R.raw.movies);
             movies = XmlParser.parse(is);
@@ -59,15 +63,16 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        currentMovie=movies.get(0);
         // Vidéo view
-        VideoView vidView = (VideoView)findViewById(R.id.videoView);
+        vidView = (VideoView)findViewById(R.id.videoView);
         // Par défault on met la première vidéo
-        Log.v(TAG,movies.get(0).getUrl());
-        Uri vidUri = Uri.parse(movies.get(0).getUrl());
+        Log.v(TAG,currentMovie.getUrl());
+        Uri vidUri = Uri.parse(currentMovie.getUrl());
         vidView.setVideoURI(vidUri);
         vidView.start();
         // Activer Vidéo Control
-        MediaController vidControl = new MediaController(this);
+        vidControl = new MediaController(this);
         vidControl.setAnchorView(vidView);
         vidView.setMediaController(vidControl);
         // Webview
@@ -76,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         browser.getSettings().setJavaScriptEnabled(true);
         // Par défault on commence le film au début et donc avec la
         // WebView avec l'URL du premier chapitre
-        List<Chapter> list_chapter = movies.get(0).getChapitres();
+        List<Chapter> list_chapter = currentMovie.getChapitres();
         browser.loadUrl(list_chapter.get(0).getUrl());
 
         for(Chapter chap : list_chapter) {
@@ -91,8 +96,6 @@ public class MainActivity extends AppCompatActivity {
         // Ajout des bouttons pour les chapitres
         // Définition du Layout à construire.
         expListView = (ExpandableListView) findViewById(R.id.expandableListView );
-
-        currentMovie=movies.get(0);
         // preparing list data
         prepareListData(movies,currentMovie);
 
@@ -107,6 +110,29 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
+
+                if (listDataHeader.get(groupPosition).equals("Movies")){
+                    for (Movie m: movies){
+                        if (m.getTitle().equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
+                            if (!m.equals(currentMovie)){
+                                Uri vidUri = Uri.parse(m.getUrl());
+                                vidView.setVideoURI(vidUri);
+                                vidView.start();
+                                vidControl.setAnchorView(vidView);
+                                vidView.setMediaController(vidControl);
+                                currentMovie=m;
+                                break;
+                            }
+                        }
+                    }
+                } else {
+                    for (Chapter chapter: currentMovie.getChapitres()) {
+                        if (chapter.getTitle().equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))) {
+                            vidView.seekTo(minutesToMili(chapter.getTime()));
+                        }
+                    }
+                }
+
                 // TODO Auto-generated method stub
                 Toast.makeText(
                         getApplicationContext(),
@@ -121,6 +147,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Méthode pour convertire une durée de type "mm:ss" en milisecondes
+     * @param time
+     * @return addition des minutes et secondes en milisecondes
+     */
+    private int minutesToMili(String time){
+        String[] time_split = time.split(":");
+        int secondes = Integer.parseInt(time_split[1]) * 1000;
+        int minutes = Integer.parseInt(time_split[0]) * 1000*60;
+        return minutes+secondes;
+    }
 
     // Preparation des données à envoyer à l'expandableListView
     private void prepareListData(List<Movie> m, Movie currentMovie) {
@@ -146,17 +183,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-    /**
-     * Méthode pour convertire une durée de type "mm:ss" en milisecondes
-     * @param time
-     * @return addition des minutes et secondes en milisecondes
-     */
-    private int minutesToMili(String time){
-        String[] time_split = time.split(":");
-        int secondes = Integer.parseInt(time_split[1]) * 1000;
-        int minutes = Integer.parseInt(time_split[0]) * 1000*60;
-        return minutes+secondes;
-    }
 
         // Association des noeuds enfants aux headers
         listDataChild.put(listDataHeader.get(0), movies);
