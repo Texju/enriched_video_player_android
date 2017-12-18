@@ -69,14 +69,17 @@ public class MainActivity extends AppCompatActivity {
         // Définition des buttons
         for(Chapter chap : list_chapter) {
             // ajout des éléments au expandableListView
-            Log.v(TAG, chap.getTitle());
+            String[] time_chap;
+            int time;
+            time_chap = chap.getTime().split(":");
+            time= minutesToMili(Integer.parseInt(time_chap[0]),Integer.parseInt(time_chap[1]));
         }
 
     }
 
     private int minutesToMili(int minutes, int secondes){
-        int seconds_m = (minutes * 1000);
-        int minutes_m = (secondes * 1000*60);
+        int seconds_m = secondes * 1000;
+        int minutes_m = minutes * 1000*60;
         return minutes_m+seconds_m;
     }
 
