@@ -6,25 +6,30 @@ import android.net.Uri;
 import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.ExpandableListView;
-import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
 import org.xmlpull.v1.XmlPullParserException;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Iterator;
 import java.util.List;
-import java.util.stream.IntStream;
 
-
+/**
+ * Cette classe est la pincipale de notre application
+ * C'est la seule activité de l'application
+ * @author  Glenn Berrou
+ * @author  Julien Couillard
+ * @see Chapter
+ */
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Info";
+
+    /**
+     * Méthode onCreate utilisé lors de la création de l'activité.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,16 +73,12 @@ public class MainActivity extends AppCompatActivity {
             Log.v(TAG, chap.getTitle());
         }
 
-
-
-
-
-
     }
 
 
-
-    // custom web view client class who extends WebViewClient
+    /**
+     * Classe customisée pour la webView du layout
+     */
     private class MyWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
