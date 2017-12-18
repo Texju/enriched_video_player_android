@@ -21,7 +21,6 @@ import java.util.List;
  * C'est la seule activité de l'application
  * @author  Glenn Berrou
  * @author  Julien Couillard
- * @see Chapter
  */
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Info";
@@ -73,6 +72,12 @@ public class MainActivity extends AppCompatActivity {
             Log.v(TAG, chap.getTitle());
         }
 
+    }
+
+    private int minutesToMili(int minutes, int secondes){
+        int seconds_m = (minutes * 1000);
+        int minutes_m = (secondes * 1000*60);
+        return minutes_m+seconds_m;
     }
 
 
