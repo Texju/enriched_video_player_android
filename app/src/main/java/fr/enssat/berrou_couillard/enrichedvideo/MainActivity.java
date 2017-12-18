@@ -26,9 +26,19 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.IntStream;
 
-
+/**
+ * Cette classe est la pincipale de notre application
+ * C'est la seule activité de l'application
+ * @author  Glenn Berrou
+ * @author  Julien Couillard
+ */
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Info";
+
+    /**
+     * Méthode onCreate utilisé lors de la création de l'activité.
+     * @param savedInstanceState
+     */
 
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
@@ -68,6 +78,15 @@ public class MainActivity extends AppCompatActivity {
         // WebView avec l'URL du premier chapitre
         List<Chapter> list_chapter = movies.get(0).getChapitres();
         browser.loadUrl(list_chapter.get(0).getUrl());
+
+        for(Chapter chap : list_chapter) {
+            // ajout des éléments au expandableListView
+            String[] time_chap;
+            int time;
+            time= minutesToMili(chap.getTime());
+            Log.v(TAG, chap.getTitle());
+            Log.v(TAG, String.valueOf(time));
+        }
 
         // Ajout des bouttons pour les chapitres
         // Définition du Layout à construire.
@@ -127,14 +146,26 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    /**
+     * Méthode pour convertire une durée de type "mm:ss" en milisecondes
+     * @param time
+     * @return addition des minutes et secondes en milisecondes
+     */
+    private int minutesToMili(String time){
+        String[] time_split = time.split(":");
+        int secondes = Integer.parseInt(time_split[1]) * 1000;
+        int minutes = Integer.parseInt(time_split[0]) * 1000*60;
+        return minutes+secondes;
+    }
 
         // Association des noeuds enfants aux headers
         listDataChild.put(listDataHeader.get(0), movies);
         listDataChild.put(listDataHeader.get(1), chapters);
     }
 
-
-    // custom web view client class who extends WebViewClient
+    /**
+     * Classe customisée pour la webView du layout
+     */
     private class MyWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
