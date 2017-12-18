@@ -71,16 +71,23 @@ public class MainActivity extends AppCompatActivity {
             // ajout des éléments au expandableListView
             String[] time_chap;
             int time;
-            time_chap = chap.getTime().split(":");
-            time= minutesToMili(Integer.parseInt(time_chap[0]),Integer.parseInt(time_chap[1]));
+            time= minutesToMili(chap.getTime());
+            Log.v(TAG, chap.getTitle());
+            Log.v(TAG, String.valueOf(time));
         }
 
     }
 
-    private int minutesToMili(int minutes, int secondes){
-        int seconds_m = secondes * 1000;
-        int minutes_m = minutes * 1000*60;
-        return minutes_m+seconds_m;
+    /**
+     * Méthode pour convertire une durée de type "mm:ss" en milisecondes
+     * @param time
+     * @return addition des minutes et secondes en milisecondes
+     */
+    private int minutesToMili(String time){
+        String[] time_split = time.split(":");
+        int secondes = Integer.parseInt(time_split[1]) * 1000;
+        int minutes = Integer.parseInt(time_split[0]) * 1000*60;
+        return minutes+secondes;
     }
 
 
