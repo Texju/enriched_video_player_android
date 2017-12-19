@@ -40,15 +40,15 @@ public class MainActivity extends AppCompatActivity {
      * @param savedInstanceState
      */
 
-    ExpandableListAdapter listAdapter;
-    ExpandableListView expListView;
-    List<String> listDataHeader;
-    HashMap<String, List<String>> listDataChild;
-    List<Movie> movies = null;
-    VideoView vidView;
-    MediaController vidControl;
-    Movie currentMovie;
-
+    private ExpandableListAdapter listAdapter;
+    private ExpandableListView expListView;
+    private List<String> listDataHeader;
+    private HashMap<String, List<String>> listDataChild;
+    private List<Movie> movies = null;
+    private VideoView vidView;
+    private MediaController vidControl;
+    private Movie currentMovie;
+    private WebView browser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,15 +68,14 @@ public class MainActivity extends AppCompatActivity {
         vidView = (VideoView)findViewById(R.id.videoView);
         // Par défault on met la première vidéo
         Log.v(TAG,currentMovie.getUrl());
-        Uri vidUri = Uri.parse(currentMovie.getUrl());
-        vidView.setVideoURI(vidUri);
+        vidView.setVideoURI(Uri.parse(currentMovie.getUrl()));
         vidView.start();
         // Activer Vidéo Control
         vidControl = new MediaController(this);
         vidControl.setAnchorView(vidView);
         vidView.setMediaController(vidControl);
         // Webview
-        WebView browser = (WebView) findViewById(R.id.webView);
+        browser = (WebView) findViewById(R.id.webView);
         browser.setWebViewClient(new MyWebViewClient());
         browser.getSettings().setJavaScriptEnabled(true);
         // Par défault on commence le film au début et donc avec la
@@ -115,12 +114,12 @@ public class MainActivity extends AppCompatActivity {
                     for (Movie m: movies){
                         if (m.getTitle().equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
                             if (!m.equals(currentMovie)){
-                                Uri vidUri = Uri.parse(m.getUrl());
-                                vidView.setVideoURI(vidUri);
-                                vidView.start();
-                                vidControl.setAnchorView(vidView);
-                                vidView.setMediaController(vidControl);
                                 currentMovie=m;
+                                vidView.setVideoURI(Uri.parse(currentMovie.getUrl()));
+                                vidView.start();
+                                browser.loadUrl(currentMovie.getChapitres().get(0).getUrl());
+                                prepareListData(movies,currentMovie);
+                                listAdapter.setNewItems(listDataHeader,listDataChild);
                                 break;
                             }
                         }
@@ -129,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
                     for (Chapter chapter: currentMovie.getChapitres()) {
                         if (chapter.getTitle().equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))) {
                             vidView.seekTo(minutesToMili(chapter.getTime()));
+                            browser.loadUrl(chapter.getUrl());
                         }
                     }
                 }
