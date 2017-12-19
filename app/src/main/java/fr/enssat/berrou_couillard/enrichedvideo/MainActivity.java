@@ -48,13 +48,14 @@ public class MainActivity extends AppCompatActivity {
     private VideoView vidView;
     private MediaController vidControl;
     private Movie currentMovie;
+    private Chapter currentChapter;
     private WebView browser;
+    private MyWebViewClient myWebViewClient = new MyWebViewClient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         try {
             InputStream is=getResources().openRawResource(R.raw.movies);
             movies = XmlParser.parse(is);
@@ -64,10 +65,10 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         currentMovie=movies.get(0);
+        currentChapter = currentMovie.getChapitres().get(0);
         // Vidéo view
         vidView = (VideoView)findViewById(R.id.videoView);
         // Par défault on met la première vidéo
-        Log.v(TAG,currentMovie.getUrl());
         vidView.setVideoURI(Uri.parse(currentMovie.getUrl()));
         vidView.start();
         // Activer Vidéo Control
@@ -76,40 +77,27 @@ public class MainActivity extends AppCompatActivity {
         vidView.setMediaController(vidControl);
         // Webview
         browser = (WebView) findViewById(R.id.webView);
-        browser.setWebViewClient(new MyWebViewClient());
+
+
+        myWebViewClient.shouldOverrideUrlLoading(browser,currentChapter.getUrl());
+        browser.setWebViewClient(myWebViewClient);
         browser.getSettings().setJavaScriptEnabled(true);
         // Par défault on commence le film au début et donc avec la
         // WebView avec l'URL du premier chapitre
-        List<Chapter> list_chapter = currentMovie.getChapitres();
-        browser.loadUrl(list_chapter.get(0).getUrl());
-
-        for(Chapter chap : list_chapter) {
-            // ajout des éléments au expandableListView
-            String[] time_chap;
-            int time;
-            time= minutesToMili(chap.getTime());
-            Log.v(TAG, chap.getTitle());
-            Log.v(TAG, String.valueOf(time));
-        }
-
-        // Ajout des bouttons pour les chapitres
+        //browser.loadUrl(list_chapter.get(0).getUrl());
         // Définition du Layout à construire.
         expListView = (ExpandableListView) findViewById(R.id.expandableListView );
         // preparing list data
         prepareListData(movies,currentMovie);
-
         listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
-
         // setting list adapter
         expListView.setAdapter(listAdapter);
 
         // Listview on child click listener
         expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
-
                 if (listDataHeader.get(groupPosition).equals("Movies")){
                     for (Movie m: movies){
                         if (m.getTitle().equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
@@ -117,7 +105,9 @@ public class MainActivity extends AppCompatActivity {
                                 currentMovie=m;
                                 vidView.setVideoURI(Uri.parse(currentMovie.getUrl()));
                                 vidView.start();
-                                browser.loadUrl(currentMovie.getChapitres().get(0).getUrl());
+                                currentChapter = currentMovie.getChapitres().get(0);
+                                //browser.loadUrl(currentChapter.getUrl());
+                                myWebViewClient.shouldOverrideUrlLoading(browser,currentChapter.getUrl());
                                 prepareListData(movies,currentMovie);
                                 listAdapter.setNewItems(listDataHeader,listDataChild);
                                 break;
@@ -127,21 +117,13 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     for (Chapter chapter: currentMovie.getChapitres()) {
                         if (chapter.getTitle().equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))) {
-                            vidView.seekTo(minutesToMili(chapter.getTime()));
-                            browser.loadUrl(chapter.getUrl());
+                            currentChapter = chapter;
+                            vidView.seekTo(minutesToMili(currentChapter.getTime()));
+                            //browser.loadUrl(currentChapter.getUrl());
+                            myWebViewClient.shouldOverrideUrlLoading(browser,currentChapter.getUrl());
                         }
                     }
                 }
-
-                // TODO Auto-generated method stub
-                Toast.makeText(
-                        getApplicationContext(),
-                        listDataHeader.get(groupPosition)
-                                + " : "
-                                + listDataChild.get(
-                                listDataHeader.get(groupPosition)).get(
-                                childPosition), Toast.LENGTH_SHORT)
-                        .show();
                 return false;
             }
         });
@@ -197,8 +179,17 @@ public class MainActivity extends AppCompatActivity {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             // TODO : Faire une white list des URL pour désactiver les clics dans la webView
             //boolean contains = IntStream.of().anyMatch(x -> x == 4);
-            view.loadUrl(url); // load the url
-            return true;
+            Log.v(TAG, "---------------");
+            for(Chapter ch: currentMovie.getChapitres()) {
+                Log.v(TAG, ch.getUrl());
+                if (url.equals(ch.getUrl())){
+                    Log.v(TAG, "TRUE");
+                    view.loadUrl(url); // load the url
+                    return true;
+                }
+            }
+            view.loadUrl(currentChapter.getUrl());
+            return false;
         }
     }
 }
