@@ -12,16 +12,18 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- *
+ * Adaptation de la liste de donnée en une liste de vue
+ * création des vues pour les items de la liste
+ * remplissage des vues avec les données pour chaque item
  * @author  Glenn Berrou
  * @author  Julien Couillard
  */
 
+
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context _context;
-    private List<String> _listDataHeader; // header titles
-    // child data in format of header title, child title
+    private List<String> _listDataHeader;
     private HashMap<String, List<String>> _listDataChild;
 
     public ExpandableListAdapter(Context context, List<String> listDataHeader,

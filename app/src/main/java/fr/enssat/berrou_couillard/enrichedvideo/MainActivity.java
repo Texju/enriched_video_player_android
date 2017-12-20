@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private MyWebViewClient myWebViewClient = new MyWebViewClient();
 
     /**
-     * Méthode onCreate utilisé lors de la création de l'activité.
+     * Méthode onCreate utilisée lors de la création de l'activité.
      * @param savedInstanceState
      */
     @Override
@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         try {
+            //récupération des données du fichier xml movies
             InputStream is=getResources().openRawResource(R.raw.movies);
             movies = XmlParser.parse(is);
         } catch (XmlPullParserException e) {

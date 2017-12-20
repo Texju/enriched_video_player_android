@@ -11,17 +11,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Cette classe est utilisée pour avoir un objet Chapter
- * Elle permet d'utiliser plus facilement les données stokées et plus précisément les chapitres.
- * Elle est utilisée par la classe Movie
- * Cette classe est plutôt côté "Model" c'est-à-dire proche de la base de données
+ * Classe contenant les méthodes static permettant de parser les données
+ * et de les récupérer via des objets
  * @author  Glenn Berrou
  * @author  Julien Couillard
  */
+
 public class XmlParser {
-    // We don't use namespaces
     private static final String ns = null;
 
+    /**
+     * Démarrage du processus de parsing
+     * @param input stream de l'XML
+     * @return List <Movie>
+     * @throws XmlPullParserException
+     * @throws IOException
+     */
     public static List <Movie> parse(InputStream in) throws XmlPullParserException, IOException {
         try {
             XmlPullParser parser = Xml.newPullParser();
@@ -34,10 +39,18 @@ public class XmlParser {
         }
     }
 
+    /**
+     * Lecture et instanciation des ressources de façon recursive
+     * @param parser
+     * @return List <Movie>
+     * @throws XmlPullParserException
+     * @throws IOException
+     */
     private static List <Movie> readFeed(XmlPullParser parser) throws XmlPullParserException, IOException {
         List <Movie> movies = new ArrayList();
         Movie movie;
 
+        //Recherche d'éléments ayant un tag d'entrée 'ressources'
         parser.require(XmlPullParser.START_TAG, ns, "resources");
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
@@ -46,12 +59,20 @@ public class XmlParser {
             String name = parser.getName();
             if (name.equals("movie")) {
                 movie = readMovie(parser);
+                //Ajout du film courant à la liste des films
                 movies.add(movie);
             }
         }
         return movies;
     }
 
+    /**
+     * Lecture et instanciation d'un film de façon recursive
+     * @param parser
+     * @return Movie
+     * @throws XmlPullParserException
+     * @throws IOException
+     */
     private static Movie readMovie(XmlPullParser parser) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, ns, "movie");
         List <Chapter> chapters = new ArrayList();
@@ -77,6 +98,13 @@ public class XmlParser {
         return new Movie(chapters, url, title);
     }
 
+    /**
+     * Lecture et instanciation d'un chapitre
+     * @param parser
+     * @return Chapter
+     * @throws XmlPullParserException
+     * @throws IOException
+     */
     private static Chapter readChapter(XmlPullParser parser) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, ns, "chapter");
         String title = null;
@@ -140,6 +168,12 @@ public class XmlParser {
         return result;
     }
 
+    /**
+     * On skip si l'élément lu dans le XML ne nous intéresse pas
+     * @param parser
+     * @throws XmlPullParserException
+     * @throws IOException
+     */
     private static void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
         if (parser.getEventType() != XmlPullParser.START_TAG) {
             throw new IllegalStateException();
