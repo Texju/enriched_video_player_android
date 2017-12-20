@@ -30,21 +30,21 @@
         </chapter>
     </movie>
     <movie>
-        <title>VIDÉO 2</title>
-        <url>http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4</url>
+        <title>Elephant dream</title>
+        <url>http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</url>
         <chapter>
             <subtitle>Intro</subtitle>
             <time>00:00</time>
-            <url>http://re-potemkin.httpdot.net/</url>
+            <url>https://orange.blender.org/</url>
         </chapter>
         <chapter>
             <subtitle>Meat</subtitle>
-            <time>05:11</time>
+            <time>02:11</time>
             <url>https://en.wikipedia.org/wiki/Meat</url>
         </chapter>
         <chapter>
             <subtitle>Ship store</subtitle>
-            <time>05:11</time>
+            <time>03:16</time>
             <url>https://en.wikipedia.org/wiki/Retail_store</url>
         </chapter>
     </movie>

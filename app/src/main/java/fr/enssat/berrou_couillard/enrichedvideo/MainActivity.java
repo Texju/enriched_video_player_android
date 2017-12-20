@@ -25,7 +25,6 @@ import java.util.List;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "Info";
     private ExpandableListAdapter listAdapter;
     private ExpandableListView expListView;
     private List<String> listDataHeader;
@@ -177,7 +176,6 @@ public class MainActivity extends AppCompatActivity {
          */
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            Log.v(TAG, "---------------");
             for(Chapter ch: currentMovie.getChapitres()) {
                 if (url.equals(ch.getUrl())){
                     // On peut changer d'url car elle est dans le fichier
@@ -186,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             // changement d'URL refusé car elle n'est pas en lien avec le film
-            view.loadUrl(currentChapter.getUrl());
+            //view.loadUrl(currentChapter.getUrl());
             return false;
         }
     }
