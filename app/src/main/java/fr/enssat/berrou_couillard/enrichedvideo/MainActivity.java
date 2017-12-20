@@ -167,19 +167,24 @@ public class MainActivity extends AppCompatActivity {
      * Classe customisée pour la webView du layout
      */
     private class MyWebViewClient extends WebViewClient {
+        /**
+         * Méthode qui évite de naviguer sur la WebView comme on le souhaite.
+         * Permet d'éviter de naviguer sur d'autre url excepté celles du film dans le fichier movies.xml
+         * @param view
+         * @param url
+         * @return boolean True ou False si nous devons changer l'url courante de la WebView
+         */
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            // TODO : Faire une white list des URL pour désactiver les clics dans la webView
-            //boolean contains = IntStream.of().anyMatch(x -> x == 4);
             Log.v(TAG, "---------------");
             for(Chapter ch: currentMovie.getChapitres()) {
-                Log.v(TAG, ch.getUrl());
                 if (url.equals(ch.getUrl())){
-                    Log.v(TAG, "TRUE");
+                    // On peut changer d'url car elle est dans le fichier
                     view.loadUrl(url); // load the url
                     return true;
                 }
             }
+            // changement d'URL refusé car elle n'est pas en lien avec le film
             view.loadUrl(currentChapter.getUrl());
             return false;
         }
