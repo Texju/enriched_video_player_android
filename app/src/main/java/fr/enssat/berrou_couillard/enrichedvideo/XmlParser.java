@@ -1,6 +1,5 @@
 package fr.enssat.berrou_couillard.enrichedvideo;
 
-import android.util.Log;
 import android.util.Xml;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -12,9 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by berrou on 07/12/17.
+ * Cette classe est utilisée pour avoir un objet Chapter
+ * Elle permet d'utiliser plus facilement les données stokées et plus précisément les chapitres.
+ * Elle est utilisée par la classe Movie
+ * Cette classe est plutôt côté "Model" c'est-à-dire proche de la base de données
+ * @author  Glenn Berrou
+ * @author  Julien Couillard
  */
-
 public class XmlParser {
     // We don't use namespaces
     private static final String ns = null;

@@ -7,24 +7,15 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.ExpandableListView;
-import android.widget.LinearLayout;
 import android.widget.MediaController;
-import android.widget.Toast;
 import android.widget.VideoView;
-
 import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.stream.IntStream;
 
 /**
  * Cette classe est la pincipale de notre application
@@ -33,13 +24,8 @@ import java.util.stream.IntStream;
  * @author  Julien Couillard
  */
 public class MainActivity extends AppCompatActivity {
+
     private static final String TAG = "Info";
-
-    /**
-     * Méthode onCreate utilisé lors de la création de l'activité.
-     * @param savedInstanceState
-     */
-
     private ExpandableListAdapter listAdapter;
     private ExpandableListView expListView;
     private List<String> listDataHeader;
@@ -52,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
     private WebView browser;
     private MyWebViewClient myWebViewClient = new MyWebViewClient();
 
+    /**
+     * Méthode onCreate utilisé lors de la création de l'activité.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,14 +67,12 @@ public class MainActivity extends AppCompatActivity {
         vidView.setMediaController(vidControl);
         // Webview
         browser = (WebView) findViewById(R.id.webView);
-
-
-        myWebViewClient.shouldOverrideUrlLoading(browser,currentChapter.getUrl());
         browser.setWebViewClient(myWebViewClient);
         browser.getSettings().setJavaScriptEnabled(true);
         // Par défault on commence le film au début et donc avec la
         // WebView avec l'URL du premier chapitre
-        //browser.loadUrl(list_chapter.get(0).getUrl());
+        //browser.loadUrl(currentChapter.getUrl());
+        myWebViewClient.shouldOverrideUrlLoading(browser,currentChapter.getUrl());
         // Définition du Layout à construire.
         expListView = (ExpandableListView) findViewById(R.id.expandableListView );
         // preparing list data
@@ -141,7 +129,11 @@ public class MainActivity extends AppCompatActivity {
         return minutes+secondes;
     }
 
-    // Preparation des données à envoyer à l'expandableListView
+    /**
+     * Méthode pour préparer les données à envoyer à l'expandableListView
+     * @param m
+     * @param currentMovie
+     */
     private void prepareListData(List<Movie> m, Movie currentMovie) {
 
         listDataHeader = new ArrayList<String>();
