@@ -24,7 +24,7 @@ import java.util.List;
  * @author  Julien Couillard
  */
 public class MainActivity extends AppCompatActivity {
-
+    private String TAG = "APPLI_ANDROID";
     private ExpandableListAdapter listAdapter;
     private ExpandableListView expListView;
     private List<String> listDataHeader;
@@ -176,15 +176,18 @@ public class MainActivity extends AppCompatActivity {
          */
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            Log.v(TAG, url);
             for(Chapter ch: currentMovie.getChapitres()) {
+                Log.v(TAG, ch.getUrl());
                 if (url.equals(ch.getUrl())){
+                    Log.v(TAG, "MATCH");
                     // On peut changer d'url car elle est dans le fichier
                     view.loadUrl(url); // load the url
                     return true;
                 }
             }
-            // changement d'URL refusé car elle n'est pas en lien avec le film
-            //view.loadUrl(currentChapter.getUrl());
+            // changement d'URL refusée car elle n'est pas en lien avec le film
+            view.loadUrl(currentChapter.getUrl());
             return false;
         }
     }

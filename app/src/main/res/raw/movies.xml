@@ -38,14 +38,19 @@
             <url>https://orange.blender.org/</url>
         </chapter>
         <chapter>
-            <subtitle>Meat</subtitle>
-            <time>02:11</time>
-            <url>https://en.wikipedia.org/wiki/Meat</url>
+            <subtitle>Run</subtitle>
+            <time>01:34</time>
+            <url>https://en.m.wikipedia.org/wiki/Running</url>
         </chapter>
         <chapter>
-            <subtitle>Ship store</subtitle>
-            <time>03:16</time>
-            <url>https://en.wikipedia.org/wiki/Retail_store</url>
+            <subtitle>Black vulture</subtitle>
+            <time>02:23</time>
+            <url>https://en.m.wikipedia.org/wiki/Black_vulture</url>
+        </chapter>
+        <chapter>
+            <subtitle>Murder</subtitle>
+            <time>08:40</time>
+            <url>https://en.m.wikipedia.org/wiki/Murder</url>
         </chapter>
     </movie>
 </resources>
