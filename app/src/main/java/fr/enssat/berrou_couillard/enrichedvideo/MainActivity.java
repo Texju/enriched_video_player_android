@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         try {
             //récupération des données du fichier xml movies
             InputStream is=getResources().openRawResource(R.raw.movies);
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         }
         currentMovie=movies.get(0);
         currentChapter = currentMovie.getChapitres().get(0);
+
         // Vidéo view
         vidView = (VideoView)findViewById(R.id.videoView);
         // Par défault on met la première vidéo
@@ -69,21 +71,22 @@ public class MainActivity extends AppCompatActivity {
         browser.getSettings().setJavaScriptEnabled(true);
         // Par défault on commence le film au début et donc avec la
         // WebView avec l'URL du premier chapitre
-        //browser.loadUrl(currentChapter.getUrl());
         myWebViewClient.shouldOverrideUrlLoading(browser,currentChapter.getUrl());
-        // Définition du Layout à construire.
+
+        // Expandable list view
+        // on l'associe à la vue du mainActivity
         expListView = (ExpandableListView) findViewById(R.id.expandableListView );
-        // preparing list data
+        // préparation des données à mettre dans les headers et les childs
         prepareListData(movies,currentMovie);
         listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
-        // setting list adapter
+        // on associe l'adapter à l'expandalble list view
         expListView.setAdapter(listAdapter);
-
-        // Listview on child click listener
+        //actions à effectuer lors d'un click sur les childs de l'expandable list view
         expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
+                //S'il s'agit d'un click sur un film on charge la video correspondante et la web view avec l'URL du film cliqué
                 if (listDataHeader.get(groupPosition).equals("Movies")){
                     for (Movie m: movies){
                         if (m.getTitle().equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
@@ -92,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
                                 vidView.setVideoURI(Uri.parse(currentMovie.getUrl()));
                                 vidView.start();
                                 currentChapter = currentMovie.getChapitres().get(0);
-                                //browser.loadUrl(currentChapter.getUrl());
                                 myWebViewClient.shouldOverrideUrlLoading(browser,currentChapter.getUrl());
                                 prepareListData(movies,currentMovie);
                                 listAdapter.setNewItems(listDataHeader,listDataChild);
@@ -101,11 +103,11 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 } else {
+                    //S'il s'agit d'un click sur un chapitre on charge la video à l'instant du chapitre cliqué et on charge la web view avec l'URL du chapitre cliqué
                     for (Chapter chapter: currentMovie.getChapitres()) {
                         if (chapter.getTitle().equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))) {
                             currentChapter = chapter;
                             vidView.seekTo(minutesToMili(currentChapter.getTime()));
-                            //browser.loadUrl(currentChapter.getUrl());
                             myWebViewClient.shouldOverrideUrlLoading(browser,currentChapter.getUrl());
                         }
                     }

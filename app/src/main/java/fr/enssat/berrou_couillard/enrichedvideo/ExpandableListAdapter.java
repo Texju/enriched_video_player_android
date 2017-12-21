@@ -15,6 +15,8 @@ import java.util.List;
  * Adaptation de la liste de donnée en une liste de vue
  * création des vues pour les items de la liste
  * remplissage des vues avec les données pour chaque item
+ * Utilisation de la vue list_item.xml pour la liste des items enfants
+ * Utilisation de la vue list_group.xml pour la liste des header
  * @author  Glenn Berrou
  * @author  Julien Couillard
  */
