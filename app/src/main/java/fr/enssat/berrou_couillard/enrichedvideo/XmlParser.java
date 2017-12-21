@@ -135,6 +135,7 @@ public class XmlParser {
         return subtitle;
     }
 
+    // Processes url tags in the feed.
     private static String readUrl(XmlPullParser parser) throws IOException, XmlPullParserException {
         parser.require(XmlPullParser.START_TAG, ns, "url");
         String url = readText(parser);

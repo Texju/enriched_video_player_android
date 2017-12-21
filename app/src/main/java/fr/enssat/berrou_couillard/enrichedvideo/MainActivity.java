@@ -3,7 +3,6 @@ package fr.enssat.berrou_couillard.enrichedvideo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.net.Uri;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -24,7 +23,6 @@ import java.util.List;
  * @author  Julien Couillard
  */
 public class MainActivity extends AppCompatActivity {
-    private String TAG = "APPLI_ANDROID";
     private ExpandableListAdapter listAdapter;
     private ExpandableListView expListView;
     private List<String> listDataHeader;
@@ -176,11 +174,8 @@ public class MainActivity extends AppCompatActivity {
          */
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            Log.v(TAG, url);
             for(Chapter ch: currentMovie.getChapitres()) {
-                Log.v(TAG, ch.getUrl());
                 if (url.equals(ch.getUrl())){
-                    Log.v(TAG, "MATCH");
                     // On peut changer d'url car elle est dans le fichier
                     view.loadUrl(url); // load the url
                     return true;
