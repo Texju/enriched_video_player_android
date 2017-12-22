@@ -61,10 +61,12 @@ public class MainActivity extends AppCompatActivity {
         // Par défault on met la première vidéo
         vidView.setVideoURI(Uri.parse(currentMovie.getUrl()));
         vidView.start();
+
         // Activer Vidéo Control
         vidControl = new MediaController(this);
         vidControl.setAnchorView(vidView);
         vidView.setMediaController(vidControl);
+
         // Webview
         browser = (WebView) findViewById(R.id.webView);
         browser.setWebViewClient(myWebViewClient);
